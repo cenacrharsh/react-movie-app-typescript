@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-nocheck
+
 import {
   SEARCH_BASE_URL,
   POPULAR_BASE_URL,
@@ -88,6 +91,7 @@ const apiSettings = {
       password,
       request_token: requestToken,
     };
+
     // First authenticate the requestToken
     const data = await (
       await fetch(LOGIN_URL, {
@@ -95,6 +99,7 @@ const apiSettings = {
         body: JSON.stringify(bodyData),
       })
     ).json();
+
     // Then get the sessionId with the requestToken
     if (data.success) {
       const sessionId = await (
@@ -106,18 +111,18 @@ const apiSettings = {
       return sessionId;
     }
   },
-  // rateMovie: async (sessionId, movieId, value) => {
-  //   const endpoint = `${API_URL}movie/${movieId}/rating?api_key=${API_KEY}&session_id=${sessionId}`;
+  rateMovie: async (sessionId, movieId, value) => {
+    const endpoint = `${API_URL}movie/${movieId}/rating?api_key=${API_KEY}&session_id=${sessionId}`;
 
-  //   const rating = await (
-  //     await fetch(endpoint, {
-  //       ...defaultConfig,
-  //       body: JSON.stringify({ value }),
-  //     })
-  //   ).json();
+    const rating = await (
+      await fetch(endpoint, {
+        ...defaultConfig,
+        body: JSON.stringify({ value }),
+      })
+    ).json();
 
-  //   return rating;
-  // },
+    return rating;
+  },
 };
 
 export default apiSettings;
